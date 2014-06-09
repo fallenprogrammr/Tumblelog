@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Runner">
+      <HintPath>..\..\RunSqlRun\SqlServerCeRunner\bin\Debug\Runner.dll</HintPath>
+    </Reference>
+    <Reference Include="SqlServerCeRunner">
+      <HintPath>..\..\RunSqlRun\SqlServerCeRunner\bin\Debug\SqlServerCeRunner.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
@@ -83,6 +89,12 @@
   <ItemGroup>
     <Content Include="..\packages\PhantomJS.1.9.7\tools\phantomjs\phantomjs.exe">
       <Link>phantomjs.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CleanupTables.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HomePageTestData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="phantomjs-license.txt">

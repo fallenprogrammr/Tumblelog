@@ -1,0 +1,7 @@
+﻿INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post1','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post1', DATEADD(day,-14,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post2','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post2', DATEADD(day,-12,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post3','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post3', DATEADD(day,-10,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post4','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post4', DATEADD(day,-7,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post5','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post5', DATEADD(day,-5,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post6','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post6', DATEADD(day,-4,GETDATE()));
+INSERT INTO posts(title, body, slug, created_on) VALUES ('acceptance-test-post7','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post7', DATEADD(day,-1,GETDATE()));

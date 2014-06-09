@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Tumblelog.Models;
 
 namespace Tumblelog.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
-            return View();
+            var postsRepo = new SqlCePostRepository();
+            return View(postsRepo.GetHomePageModel());
         }
 
         public ActionResult About() {

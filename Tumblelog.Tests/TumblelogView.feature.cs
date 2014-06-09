@@ -86,6 +86,11 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Then("the page should have the title of \'My Tumblelog\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
     testRunner.And("the heading on the page should be \'My Tumblelog\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+    testRunner.And("the page should display the summaries of the latest 5 blog entries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+    testRunner.And("the total count of entries in the database should match the total count shown on " +
+                    "the home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
