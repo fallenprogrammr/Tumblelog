@@ -1,0 +1,719 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Tumblelog by fallenprogrammr</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/fallenprogrammr/Tumblelog">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/fallenprogrammr/Tumblelog/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/fallenprogrammr/Tumblelog/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Tumblelog</h1>
+          <p>Getting started with BDD and PhantomJs.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/fallenprogrammr">fallenprogrammr</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="getting-started-with-bdd-and-phantomjs-in-net" class="anchor" href="#getting-started-with-bdd-and-phantomjs-in-net"><span class="octicon octicon-link"></span></a>Getting started with BDD and PhantomJs in .Net.</h1>
+
+<h3>
+<a name="how-creating-a-simple-aspnet-mvc-application-by-using-specflow--phantom-js-to-drive-the-feature-requirements" class="anchor" href="#how-creating-a-simple-aspnet-mvc-application-by-using-specflow--phantom-js-to-drive-the-feature-requirements"><span class="octicon octicon-link"></span></a>How: Creating a simple asp.net mvc application by using SpecFlow + Phantom JS to drive the feature requirements.</h3>
+
+<p>Create a basic tumblelog application.
+    A site for public to visit and view posts and comment on them.
+    An admin site that manages the posts.</p>
+
+<p>Dev environment:
+    Windows 7 or higher.
+    Visual Studio 2013 (Professional or higher to enable Specflow addon support like syntax highlighting, templates, etc by default).
+        If you cannot go beyond the Express version, you can use Alister Scott's guide to enable Specflow integration:
+            <a href="http://watirmelon.com/2011/02/18/c-sharp-atdd-on-a-shoestring/">http://watirmelon.com/2011/02/18/c-sharp-atdd-on-a-shoestring/</a>
+            Although Alister's guide is for Visual Studio 2012, a little bit of work can get the Visual Studio 2013 version working as well.</p>
+
+<pre><code>SpecFlow (What is it?).
+Phantom JS ( What is it?).
+Sql CE for persistence of data (not the ideal database, but for this instance let's stick with it).
+</code></pre>
+
+<p>The goal of this experiment is to learn SpecFlow, PhantomJS and using  BDD / ATDD to drive the creation of an application.</p>
+
+<p>What is BDD / ATDD?
+    Behavior-driven development or BDD is a development process based on TDD (Test driven development).
+    This process is also sometimes called ATDD or Acceptance Tests Driven Development.
+    You can find an introduction to BDD via the now famous blog post by Dan North introducing BDD to the world <a href="http://dannorth.net/introducing-bdd/">http://dannorth.net/introducing-bdd/</a>.
+    The Wikipedia entry for BDD also has a decent introduction:
+    <a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">http://en.wikipedia.org/wiki/Behavior_Driven_Development</a>
+        As I use it more and more, the term Executable Specifications makes more sense to me than BDD / ATDD.
+        The feature files containing the tests become more like a living documentation of the system.</p>
+
+<p>What is SpecFlow, how does it fit in?
+    SpecFlow brings BDD to .Net projects, it's one of the most mature of all the tools / frameworks in the .net space. 
+    SpecFlow supports the Gherkin syntax / language used by BDD to define the behavior for your application.
+    SpecFlow has IDE integration for Visual Studio to bring in templates, syntax highlighting etc.
+        <a href="http://www.specflow.org/documentation/Install-IDE-Integration/">http://www.specflow.org/documentation/Install-IDE-Integration/</a>
+    SpecFlow is available on NuGet and can be installed as a reference for your project by using the command
+        install-package SpecFlow
+    The approach to using SpecFlow in your SDLC will be something like this:</p>
+
+<pre><code>Begin by writing Gherkin based behaviors for your application.
+Generate tests from those behaviors (Specflow supports the following testing frameworks http://www.specflow.org/documentation/Unit-Test-Providers/), these tests would fail as they would have no implementation.
+Write code to make those tests pass.
+Rinse and repeat.
+Note: As these are acceptance tests, they are at a higher level than unit and integration tests.
+</code></pre>
+
+<p>What is PhantomJS?
+    If your web application needs to be tested via the browser in an automated fashion, the selenium framework would be the ideal candidate for handling that task. 
+    The traditional way to test using selenium is to either use the selenium batch processing language (selenese) or to use the selenium library in your test project and drive the automated tests through it.
+    The selenium framework talks to the respective browser instance and carries out actions. This approach, while it gets the application tested, is very slow for scenarios like regression tests, smoke tests where you have to verify if your functional tests are not breaking and it does not matter if all the browsers are displaying the elements correctly.
+    Enter headless browser testing. 
+    A headless browser is an instance of a browser engine with no UI overhead. Shedding the UI weight gives the instance a big advantage in performance. 
+    One of the most popular frameworks for handling the headless browser testing tasks is PhantomJS. (<a href="http://phantomjs.org">http://phantomjs.org</a>).
+    Selenium supports PhantomJS as a browser and can easily be plugged into your testing life-cycle.
+    Using a headless framework like PhantomJS also benefits a CI environment where you don't have to worry about setting up browser(s).</p>
+
+<p>Prequel:</p>
+
+<p>Browse to <a href="http://www.specflow.org/documentation/Install-IDE-Integration/">http://www.specflow.org/documentation/Install-IDE-Integration/</a></p>
+
+<p>Follow the instructions to get SpecFlow installed.</p>
+
+<p>File-&gt;New Project</p>
+
+<pre><code>Start Visual Studio and click File-&gt;New Project, select Web from the templates list on the left and select 'ASP.Net Web Application':
+</code></pre>
+
+<p>I am using Visual Studio 2013 with Update 2 (RC as of this time), if you are using a different version of Visual Studio or a version of .Net framework &lt; 4.5, your selection dialog will be different.</p>
+
+<p>If using an older version of Visual Studio or using a different version of .Net Framework, select an ASP.Net MVC project.</p>
+
+<p>Enter Tumblelog as the application name, Click Ok.</p>
+
+<p>On the next dialog, select MVC and check the Add unit tests option, click Ok.</p>
+
+<p>On an older version of Visual Studio or a different version of .Net Framework:</p>
+
+<p>Select Internet Application, check the 'Create a unit test project' option, click Ok.</p>
+
+<p>From the Solution Explorer, delete all the default / auto-generated files from the test project.</p>
+
+<p>Click Tools-&gt; NuGet Package Manager -&gt;  Package Manager Console.</p>
+
+<p>In the Package Manager Console Window, type these commands:</p>
+
+<pre><code>install-package SpecFlow
+install-package Selenium.WebDriver
+install-package PhantomJS
+</code></pre>
+
+<p>Remember to set the Default project to your tests project.</p>
+
+<p>Or you can specify the project name in the command by using the -ProjectName option.
+    install-package -ProjectName  SpecFlow
+    install-package -ProjectName  Selenium.WebDriver
+    install-package -ProjectName  PhantomJS</p>
+
+<p>Open the app.config file from the test project.
+Add the respective line for your choice of testing framework in the  section:</p>
+
+<pre><code>&lt;unitTestProvider name="MSTest" /&gt; 
+</code></pre>
+
+<p>Refer to this url for supported unit test frameworks in SpecFlow:</p>
+
+<p><a href="http://www.specflow.org/documentation/Unit-Test-Providers/">http://www.specflow.org/documentation/Unit-Test-Providers/</a></p>
+
+<p>Click Project-&gt;Add New Item.</p>
+
+<p>Select SpecFlow Feature File, name it TumblelogView.feature, click Add.
+Open the newly created file, you should see a dummy Feature and a scenario definition associated with it.</p>
+
+<p>Delete the content of the file and enter:</p>
+
+<pre><code>Feature: TumblelogView
+    In order to launch my blog
+    I have to make my tumblelog site viewable
+
+@homepage
+Scenario: Browse to home page
+    Given I have to view the home page
+    When I browse to the home page
+    Then the page should have the title of 'My Tumblelog'
+                 And the heading on the page should be 'My Tumblelog'
+</code></pre>
+
+<p>Right-click anywhere in the feature file view and click Generate Step Definitions.</p>
+
+<p>Click Generate.</p>
+
+<p>Save the file in the next dialog window.</p>
+
+<p>A new class file named View.cs will be created, when you open this file you may be seeing a warning:</p>
+
+<p>Click Yes to normalize the line endings to Windows (CR LF).</p>
+
+<p>The class should have the following code generated for the scenario steps:</p>
+
+<pre><code>    [Binding]
+    public class TumblelogViewSteps {
+        [Given(@"I have to view the home page")]
+        public void GivenIHaveToViewTheHomePage() {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"I browse to the home page")]
+        public void WhenIBrowseToTheHomePage() {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"the page should have the title of '(.*)'")]
+        public void ThenThePageShouldHaveTheTitleOf(string p0) {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"the heading on the page should be '(.*)'")]
+        public void ThenTheHeadingOnThePageShouldBe(string p0) {
+            ScenarioContext.Current.Pending();
+        }
+</code></pre>
+
+<p>You would see that each of the steps defined in the feature file has a corresponding method generated.</p>
+
+<p>The Given, When, Then scenarios are your Arrange, Act &amp; Assert of TDD.</p>
+
+<p>Click Test-&gt;Windows-&gt;Test Explorer or if using vs 2013 press Ctrl+Q and type test explorer and press enter.</p>
+
+<p>Click Run All.</p>
+
+<p>You should see the results of the test run with the message:</p>
+
+<pre><code>Assert.Inconclusive failed. One or more step definitions are not implemented yet.
+  TumblelogViewSteps.GivenIHaveToViewTheHomePage()
+</code></pre>
+
+<p>Now we start plugging in code to make our tests pass.</p>
+
+<p>In the TumblelogView feature file:</p>
+
+<p>Right-click on the first Step, i.e. Given I have to view the home page and click on Go to Step Definition.</p>
+
+<p>For the Given / Arrange part, we have to setup the webdriver to use PhantomJS as a browser.</p>
+
+<p>Define a private class-wide instance of the webdriver by declaring:
+    private IWebDriver driver;</p>
+
+<p>In the GivenIHaveToViewTheHomePage method, add the following code:
+    driver = new PhantomJSDriver();
+           driver.Manage().Timeouts().ImplicitlyWait(new TimeSpan(0, 0, 10));</p>
+
+<p>This sets up the PhantomJS driver to wait to find an element for a maximum of 10 seconds. You can set it lower if you want, and start increasing little by little if you start seeing timeouts. The 10 second value is a conservative one.</p>
+
+<p>If you do a run all again, you would see that the next step (Act) , i.e. WhenIBrowseToTheHomePage now fails.</p>
+
+<p>Let's work on this step now, this method requires the webdriver to browse to the home page of the site, as the site's project is part of the same solution, we need to get the IIS express url of the website.</p>
+
+<p>To do that, go to solution explorer, select Tumblelog project and press F4.</p>
+
+<p>In the properties dialog that comes up, copy the value of the URL property.</p>
+
+<p>Open app.config for the test project and add the following entry in the appSettings section (add the appSettings section if it does not already exist):</p>
+
+<pre><code>  &lt;appSettings&gt;
+    &lt;add key="home" value="&lt;value of the URL property goes here&gt;"/&gt;
+  &lt;/appSettings&gt;
+</code></pre>
+
+<p>This will give our tests a starting point for our site. As this web application is not deployed yet, we would have to start an instance of it and then run the tests to browse to it.</p>
+
+<p>I am not sure if this is an ideal way to do it or not, if I do find one, I will update the post.</p>
+
+<p>In the TumblogViewSteps.cs class's WhenIBrowseToTheHomePage method, add the following code:</p>
+
+<pre><code>driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["home"]);
+</code></pre>
+
+<p>The Act step is now complete, this means we are ready to test it.</p>
+
+<p>To do this, make the Tumblelog web application project the Startup project and press Ctrl + F5 to start the app without debugging.</p>
+
+<p>Once the application has started (browser comes up with website), go to the Test project, then in Test Explorer, click Run All.</p>
+
+<p>The test results should now reflect that the failing step should be ThenThePageShouldHaveTheTitleOfMyTumblelog.</p>
+
+<p>This is the assert portion of the test. Let's go make that step pass.</p>
+
+<p>Add the following code to the ThenThePageShouldHaveTheTitleOfMyTumblelog method:</p>
+
+<pre><code>Assert.AreEqual(p0,driver.Title);
+</code></pre>
+
+<p>Running this test will show that the test still fails as the home page title hasn't been changed, let's get this corrected.</p>
+
+<p>In the Tumblelog web application project, open Views\Home\Index.cshtml</p>
+
+<p>Change the value of ViewBag.Title to "My Tumblelog".</p>
+
+<p>Open Views\Shared_layout.cshtml.</p>
+
+<p>Change the value of the title tag to @ViewBag.Title.</p>
+
+<pre><code>&lt;title&gt;@ViewBag.Title&lt;/title&gt;
+</code></pre>
+
+<p>Run the test, the test should now pass.</p>
+
+<p>The final step in this scenario is to verify if the heading on the page is 'My Tumblelog', for this we have to change the </p><h1>
+<a name="-tag-in-the-" class="anchor" href="#-tag-in-the-"><span class="octicon octicon-link"></span></a> tag in the 
+
+</h1><p>file Views\Home\Index.cshtml in the Tumblelog web application project.</p>
+
+<p>Open Views\Home\Index.cshtml and change the value in the </p><h1>
+<a name="-tag-to-my-tumblelog" class="anchor" href="#-tag-to-my-tumblelog"><span class="octicon octicon-link"></span></a> tag to 'My Tumblelog'.
+
+</h1><p>Now how do we verify this in our test?</p>
+
+<p>We can look for a </p><h1>
+<a name="-tag-in-the-document-and-compare-the-values-this-approach-is-unstable-as-the-document-can-introduce-more--tags-during-the-design-phase" class="anchor" href="#-tag-in-the-document-and-compare-the-values-this-approach-is-unstable-as-the-document-can-introduce-more--tags-during-the-design-phase"><span class="octicon octicon-link"></span></a> tag in the document and compare the values, this approach is unstable as the document can introduce more <h1>
+<a name="-tags-during-the-design-phase" class="anchor" href="#-tags-during-the-design-phase"><span class="octicon octicon-link"></span></a> tags during the design phase.
+
+</h1>
+</h1><p>We need to identify the tag which is meant to signify the main heading for the page and give it an uniquely identifiable name.</p>
+
+<p>Change the line </p><h1>
+<a name="aspnet" class="anchor" href="#aspnet"><span class="octicon octicon-link"></span></a>ASP.NET</h1> to <h1>
+<a name="my-tumblelog" class="anchor" href="#my-tumblelog"><span class="octicon octicon-link"></span></a>My Tumblelog</h1>.
+
+<p>Note: Do not use the attribute name as it is not considered unique in an html document, id however is.</p>
+
+<p>Add the following line to the method ThenTheHeadingOnThePageShouldBe in the TumblelogViewSteps.cs file:</p>
+
+<pre><code>Assert.AreEqual(p0, driver.FindElement(By.Id("PageHeading")).Text);
+</code></pre>
+
+<p>Now all your steps and your test should pass.</p>
+
+<p>Recap:</p>
+
+<p>What have we done so far?
+    We established a scenario for our application that the home page for our application is defined by 2 elements once browsed to the home page url:</p>
+
+<pre><code>    1) The title of the page having the value of 'My Tumblelog'.
+    2) A heading / element on the page identified by the id 'PageHeading' having a value of 'My Tumblelog'.
+
+We created tests to ensure that this scenario is true when the application is navigated to its home page.
+
+We made changes in the application to ensure that the tests pass.
+</code></pre>
+
+<p>What does this get us?
+    During the development of the project, the html content is definitely going to change, the test above will ensure that the scenario which is considered a home page stays true.</p>
+
+<p>What happens if the scenario for considering a page a home page changes?
+    If it does, then make changes to the feature file and define the criteria and then move forward with making the actual changes.</p>
+
+<pre><code>That way you get a chance to clearly define the requirement and carry forward with the TDD mantra of test first.
+</code></pre>
+
+<p>Persistence</p>
+
+<p>Time to add some persistence to the blog.</p>
+
+<p>For this experiment I am using SQL Server Compact Edition.</p>
+
+<p>We need to create our database and setup the tables.</p>
+
+<p>The script I have come up for this looks like this:</p>
+
+<p>CREATE DATABASE 'd:\data\tumblelog.sdf' DATABASEPASSWORD 'tumble1234';
+CREATE TABLE posts (postid INT IDENTITY PRIMARY KEY, title NVARCHAR(250) NOT NULL, body NVARCHAR(4000) NOT NULL, slug VARCHAR(100), created_on DATETIME NOT NULL);
+CREATE TABLE comments (postid INT, body NVARCHAR(200) NOT NULL, author NVARCHAR(150) NOT NULL, created_on DATETIME NOT NULL);</p>
+
+<p>So now, how do we create it? We can either use the designer in Visual Studio to manually create it, use a migrations tool or we can do it in C#.</p>
+
+<p>There are a bunch of good migration tools out there like RoundHouse, Manatee, migrator.net, etc. The database support for them varies, and in my work environment I am faced with interacting with databases like Informix which is uncommon in the development world.</p>
+
+<p>In C# the code would look something like this:</p>
+
+<pre><code>using System.Data.SqlServerCe;
+using System.IO;
+public string void Main(string[] args) {
+           var fileName = “d:\data\tumblelog.sdf”;
+           var password = “tumble1234”;
+    var sqlLine1 = "CREATE TABLE posts (postid INT IDENTITY PRIMARY KEY, title NVARCHAR(250) NOT NULL, body NVARCHAR(4000) NOT NULL, slug NVARCHAR(100), created_on DATETIME NOT NULL);"
+    var sqlLine2 = "CREATE TABLE comments (postid INT, body NVARCHAR(200) NOT NULL, author NVARCHAR(150) NOT NULL, created_on DATETIME NOT NULL);"
+           if (File.Exists(fileName)){
+              File.Delete(fileName);
+           }
+           var connectionString = string.Format(“DataSource=\”{0}\”; Password=’{1}’”, fileName, password);
+           var en = new SqlCeEngine(connectionString);
+           en.CreateDatabase();
+    using (var sqlServerConnection = new SqlCeConnection(connectionString)) {
+                            sqlServerConnection.Open();
+                            using (var sqlServerCommand = new SqlCeCommand(sqlLine1, sqlServerConnection)) {
+                                sqlServerCommand.ExecuteNonQuery();
+                  sqlServerCommand.CommandText = sqlLine2;
+                  sqlServerCommand.ExecuteNonQuery();
+                            }
+     }
+}
+</code></pre>
+
+<p>Granted the above code could be refactored to make it cleaner,  the action of creating a database at will, might never be clean at least for Sql Server CE, what if you do want to go to a different database altogether like say PostgreSQL?  You cannot keep creating code for different databases to run your script.</p>
+
+<p>Furthermore, your database is bound to change from the above baseline to accommodate new features / enhancements, which would mean you would have to revisit the code every time you had a change in the schema.</p>
+
+<p>When integrating with a continuous integration system, your build system should be able to automate the task of creating / migrating the database.</p>
+
+<p>For suiting my needs, I have written a sql runner having a plug-in system of vendor based "runners" called RunSqlRun (rsr for short):</p>
+
+<p><a href="https://github.com/fallenprogrammr/RunSqlRun">https://github.com/fallenprogrammr/RunSqlRun</a></p>
+
+<p>The goal of the project is to have xcopy deployable system runners to the maximum extent as possible</p>
+
+<p>This gives me the flexibility I need to target any database system I want by adding a vendor specific runner to the mix.</p>
+
+<p>For this project I will be dogfooding rsr to see how well it holds up to the task.</p>
+
+<p>I have not yet finalized the deployment mechanism for NuGet, but when I do this should be simple as Install-Package rsr.Postgres and you can now run scripts for targeting postgresql databases from your code.</p>
+
+<p>Let's start this from a sql runner's perspective, </p>
+
+<p>First, let's create a .sql file that will create our database and tables having the following sql statements:</p>
+
+<pre><code>CREATE DATABASE 'd:\data\tumblelog.sdf' DATABASEPASSWORD 'tumble1234';
+CREATE TABLE posts (postid INT IDENTITY PRIMARY KEY, title NVARCHAR(250) NOT NULL, body NVARCHAR(4000) NOT NULL, slug NVARCHAR(100), created_on DATETIME NOT NULL);
+CREATE TABLE comments (postid INT, body NVARCHAR(200) NOT NULL, author NVARCHAR(150) NOT NULL, created_on DATETIME NOT NULL);
+</code></pre>
+
+<p>Add it to your solution.</p>
+
+<p>Copy the current rsr binaries from  to your machine and create the database using the command:</p>
+
+<pre><code>rsr v:SqlServerCe s:CreateDatabaseAndTables.sql
+</code></pre>
+
+<p>This should create the required database for our tumblelog.</p>
+
+<p>We now need to move back to visual studio to define our next test steps.</p>
+
+<p>In our scenario "Browse to home page", we would be adding a couple of steps.</p>
+
+<p>These will require our setup stage to take more steps to create our database from scratch and then populate the tables with data that we can use for testing our page behaviors with.</p>
+
+<p>Add these 2 lines to the "Browse to home page" scenario:</p>
+
+<pre><code> And the page should display the summaries of the latest 5 blog entries
+ And the total count of entries in the database should match the total count shown on the home page
+</code></pre>
+
+<p>These 2 new lines should now show up in a different color than the rest of scenario, what this means is SpecFlow could not find any related code matching that test step.</p>
+
+<p>Let's add the code, right click the file and click 'Generate step definitions'.</p>
+
+<p>In the dialog that comes up, select the 2 steps and click 'Copy methods to clipboard' button and not the Generate button.</p>
+
+<p>This is because the generate button overwrites the contents of the generated code if it exists, which we don't want.</p>
+
+<p>Open TumbleLogViewSteps.cs.</p>
+
+<p>Paste the copied code, the copied code should look like this:</p>
+
+<pre><code>[Then(@"the page should display the summaries of the latest (.*) blog entries")]
+public void ThenThePageShouldDisplayTheSummariesOfTheLatestBlogEntries(int p0)
+{
+    ScenarioContext.Current.Pending();
+}
+
+[Then(@"the total count of entries in the database should match the total count shown on the home page")]
+public void ThenTheTotalCountOfEntriesInTheDatabaseShouldMatchTheTotalCountShownOnTheHomePage()
+{
+    ScenarioContext.Current.Pending();
+}
+</code></pre>
+
+<p>Let's begin our arrange, act, assert for these steps.</p>
+
+<p>Arrange:
+    In the GivenIHaveToViewTheHomePage method we would have to 
+        1) Create the database file.
+        2) Setup the tables.
+        3) Add data in the tables for evaluating the test cases.</p>
+
+<p>Act:
+    This is already complete in the WhenIBrowseToTheHomePage method.</p>
+
+<p>Assert:
+    In ThenThePageShouldDisplayTheSummariesOfTheLatestBlogEntries method we would have to make sure that the summaries of the last 5 blog entries are displayed on the page.</p>
+
+<p>The arrange part starts to become tricky as the application and the test suite have to use the same database.</p>
+
+<p>First we would need to define the database connection string which will be shared between the two projects.</p>
+
+<p>For this demo, we will be using d:\data\tumblelog.sdf as our path to the database file.</p>
+
+<p>In the web.config (tumblelog asp.net mvc project) and app.config (tumblelog acceptance tests project) add a new entry in the connectionStrings section:</p>
+
+<pre><code>&lt;add name="tumblelogDb" connectionString="Data Source=d:\data\tumblelog.sdf; Password=tumble1234"/&gt;
+</code></pre>
+
+<p>Creating the database file and setting up the tables and adding data can be done by using sql script files.</p>
+
+<p>We can create 1 for setup, and 1 for adding the data, this way we can reuse the setup script later in other scenarios.</p>
+
+<p>Create a new .sql file by using the 'Text File' template named CleanupTables.sql and add the following code:</p>
+
+<pre><code>DELETE FROM comments;
+DELETE FROM posts;
+</code></pre>
+
+<p>In the properties dialog for the above file, set the Build Action to Content and Copy to Output Directory to Copy if newer.</p>
+
+<p>Right above the GivenIHaveToViewTheHomePage method add the following attribute to let the testing framework (MS / VS Test in this case) know that there is a file that should be deployed along with the assemblies before running the test:</p>
+
+<pre><code>[DeploymentItem("DatabaseAndTablesSetup.sql")]
+</code></pre>
+
+<p>Add a reference to the SqlServerCeRunner, (NuGet, Dropbox, OneDrive implementation for copying / sharing).</p>
+
+<p>Insert the following code to the GivenIHaveToViewTheHomePage method:</p>
+
+<pre><code>            var scriptRunner = new SqlServerCeRunner.Runner(ConfigurationManager.ConnectionStrings["tumblelogDb"].ConnectionString);
+            scriptRunner.RunFile("CleanupTables.sql");
+</code></pre>
+
+<p>Now that our tables are setup, we need to add data to them to make sure when the home page is rendered it displays the required elements.</p>
+
+<p>Create a new .sql file in the acceptance test project named 'HomePageTestData.sql' and add the following lines of sql statements:</p>
+
+<pre><code>INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post1','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post1', DATEADD(day,-14,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post2','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post2', DATEADD(day,-12,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post3','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post3', DATEADD(day,-10,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post4','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post4', DATEADD(day,-7,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post5','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post5', DATEADD(day,-5,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post6','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post6', DATEADD(day,-4,GETDATE()));
+INSERT INTO post(title, body, slug, created_on) VALUES ('acceptance-test-post7','This is an acceptance test post, used for testing purposes only.', 'acceptance-test-post7', DATEADD(day,-1,GETDATE()));
+</code></pre>
+
+<p>In the script we insert 7 rows in the post table with different dates, this will set our data up for our home page tests.</p>
+
+<p>The total count on the page should now show 7 and the recent posts should show the posts titled post7 - post3.</p>
+
+<p>Let's make it happen.</p>
+
+<p>Right above the GivenIHaveToViewTheHomePage method add the following attribute to let the testing framework (MS / VS Test in this case) know that there is a file that should be deployed along with the assemblies before running the test:</p>
+
+<p>[DeploymentItem("HomePageTestData.sql")]</p>
+
+<p>Add the following line of code at the end of the GivenIHaveToViewTheHomePage method:</p>
+
+<pre><code>scriptRunner.RunFile("HomePageTestData.sql");   
+</code></pre>
+
+<p>Run the web application and run the tests to see if the setup steps are working fine.</p>
+
+<p>The result of the test run should be:</p>
+
+<pre><code>Assert.Inconclusive failed. One or more step definitions are not implemented yet.
+  TumblelogViewSteps.ThenThePageShouldDisplayTheSummariesOfTheLatestBlogEntries(5)
+</code></pre>
+
+<p>Let's get this fixed:</p>
+
+<p>Create a Model (loose definition: A representation of a data structure, used in the database) for a post.</p>
+
+<p>Add a new class, PostModels in the \Models directory, add the following code.</p>
+
+<pre><code>using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace Tumblelog.Models {
+        public class Post {
+            [Key]
+            public int PostId { get; set; }
+            [DataType(DataType.Text)]
+            public string Slug { get; set; }
+            [DataType(DataType.Text)]
+            public string Title { get; set; }
+            [DataType(DataType.Text)]
+            public string Body { get; set; }
+            [DataType(DataType.DateTime)]
+            public DateTime CreatedOn { get; set; }
+        }
+
+    public class HomePageModel {
+        public List&lt;Post&gt; LatestPosts {get;set;}
+        public int TotalPosts { get; set; }
+
+        public HomePageModel() {
+            LatestPosts = new List&lt;Post&gt;();
+        }
+    }
+}
+</code></pre>
+
+<p>The data annotations added on top of each property is used by the asp.net mvc runtime to handle the rendering of controls smartly.</p>
+
+<p>Create a new interface named IPostRepository.cs in the Models directory(yes, this is 2014 and I am using a repository, get over it).</p>
+
+<p>In this demo, I am not using any orm / orm-lite and am sticking to pure sql queries to drive the requirements to keep it simple, you can model your data layer however you want.</p>
+
+<p>Add the following code:</p>
+
+<pre><code>namespace Tumblelog.Models {
+    public interface IPostRepository {
+        HomePageModel GetHomePageModel();
+    }
+}
+</code></pre>
+
+<p>Add a new class SqlCePostRepository.cs in the \Models directory (this class inherits the IPostRepository interface defined above) and add the following code:</p>
+
+<pre><code>using System.Configuration;
+using System.Data.SqlServerCe;
+namespace Tumblelog.Models {
+    public class SqlCePostRepository : IPostRepository{
+
+        public HomePageModel GetHomePageModel() {
+            //SqlServerCe does not support multiple resultsets or subqueries, hence the running of 2 seperate queries in this example (my sql-fu is rusty maybe?).
+            var homePageModel = new HomePageModel();
+            using (var sqlCeConnection = new SqlCeConnection(ConfigurationManager.ConnectionStrings["tumblelogDb"].ConnectionString)) {
+                sqlCeConnection.Open();
+                const string getAllPostsQuery = "SELECT TOP 5 postid, title, body, slug, created_on FROM posts ORDER BY created_on DESC;";
+                const string getTotalPostsCountQuery = "SELECT COUNT(*) as total_posts FROM posts;";
+                using (var getAllPostsCommand = new SqlCeCommand(getAllPostsQuery, sqlCeConnection)) {
+                    using (var allPostsReader = getAllPostsCommand.ExecuteReader()) {
+                        while (allPostsReader.Read()) {
+                            homePageModel.LatestPosts.Add(new Post() {
+                                PostId = allPostsReader.GetInt32(allPostsReader.GetOrdinal("postid")),
+                                Slug = allPostsReader.GetString(allPostsReader.GetOrdinal("slug")),
+                                Title = allPostsReader.GetString(allPostsReader.GetOrdinal("title")),
+                                Body = allPostsReader.GetString(allPostsReader.GetOrdinal("body")),
+                                CreatedOn = allPostsReader.GetDateTime(allPostsReader.GetOrdinal("created_on"))
+                            });
+                        }
+                    }
+                }
+                using (var getTotalPostsCommand = new SqlCeCommand(getTotalPostsCountQuery,sqlCeConnection)) {
+                    using (var totalPostsReader = getTotalPostsCommand.ExecuteReader()) {
+                        if (totalPostsReader.Read()) {
+                            homePageModel.TotalPosts =
+                                totalPostsReader.GetInt32(totalPostsReader.GetOrdinal("total_posts"));
+                        }
+                    }
+                }
+            }
+            return homePageModel;
+        }
+    }
+}
+</code></pre>
+
+<p>In the HomeController.cs class's Index method, remove the default return View(); statement and add the following code:</p>
+
+<pre><code>            var postsRepo = new SqlCePostRepository();
+            return View(postsRepo.GetHomePageModel());
+</code></pre>
+
+<p>Open \Views\Home\index.cshtml in the tumblelog asp.net mvc application and replace the existing content by:</p>
+
+<pre><code>@{
+    ViewBag.Title = "My Tumblelog";
+}
+@using Tumblelog.Models
+@model HomePageModel
+&lt;div class="jumbotron"&gt;
+    &lt;h1 id="PageHeading"&gt;My Tumblelog&lt;/h1&gt;
+    &lt;p class="lead"&gt;Welcome to my tumblelog.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="row"&gt;
+
+    @foreach (var post in Model.LatestPosts) {
+        &lt;div id="recentBlogPosts" class="col-md-4"&gt;
+            &lt;h4 id="postHeading"&gt;@post.Title&lt;/h4&gt;
+            &lt;p&gt;@post.Body.Substring(0, 20)...&lt;/p&gt;
+            &lt;p&gt;Created on: @post.CreatedOn&lt;/p&gt;
+        &lt;/div&gt;
+    }
+&lt;/div&gt;
+</code></pre>
+
+<p>Let's add some assertions to our test to validate the content.</p>
+
+<p>In the ThenThePageShouldDisplayTheSummariesOfTheLatestBlogEntries method, add the following code:</p>
+
+<pre><code>            Assert.AreEqual(p0, driver.FindElements(By.Id("recentBlogPosts")).Count);
+            var headings = driver.FindElements(By.Id("postHeading"));
+            foreach (var heading in headings) {
+                Assert.IsTrue(heading.Text == "acceptance-test-post7" || heading.Text == "acceptance-test-post6" || heading.Text == "acceptance-test-post5" || heading.Text == "acceptance-test-post4" || heading.Text == "acceptance-test-post3");
+            }
+</code></pre>
+
+<p>Having 2 asserts in a test is a test smell (test is asserting too much), it would be better if the conditions were broken down into 2 and then the tests would look more cleaner (for the purposes of this tutorial, I will keep them in this single method).</p>
+
+<p>Running the tests now should show all but the last test remaining:</p>
+
+<pre><code>Given I have to view the home page
+-&gt; done: TumblelogViewSteps.GivenIHaveToViewTheHomePage() (1.7s)
+When I browse to the home page
+-&gt; done: TumblelogViewSteps.WhenIBrowseToTheHomePage() (0.3s)
+Then the page should have the title of 'My Tumblelog'
+-&gt; done: TumblelogViewSteps.ThenThePageShouldHaveTheTitleOf("My Tumblelog") (0.0s)
+And the heading on the page should be 'My Tumblelog'
+-&gt; done: TumblelogViewSteps.ThenTheHeadingOnThePageShouldBe("My Tumblelog") (0.1s)
+And the page should display the summaries of the latest 5 blog entries
+-&gt; done: TumblelogViewSteps.ThenThePageShouldDisplayTheSummariesOfTheLatestBlogEntries(5) (0.2s)
+And the total count of entries in the database should match the total count shown on the home page
+-&gt; pending: TumblelogViewSteps.ThenTheTotalCountOfEntriesInTheDatabaseShouldMatchTheTotalCountShownOnTheHomePage()
+
+Assert.Inconclusive failed. One or more step definitions are not implemented yet.
+  TumblelogViewSteps.ThenTheTotalCountOfEntriesInTheDatabaseShouldMatchTheTotalCountShownOnTheHomePage()
+</code></pre>
+
+<p>Going back to our view i.e. Views\index.cshtml, add the following code:</p>
+
+<pre><code>&lt;div class="row"&gt;
+    &lt;p id="totalBlogPosts"&gt;@Model.TotalPosts total blog posts so far.&lt;/p&gt;    
+&lt;/div&gt;
+</code></pre>
+
+<p>In the method ThenTheTotalCountOfEntriesInTheDatabaseShouldMatchTheTotalCountShownOnTheHomePage add the following code to assert that the count is correct:</p>
+
+<pre><code>        const int expectedTotalPosts = 7;
+        Assert.IsTrue(driver.FindElement(By.Id("totalBlogPosts")).Text.Equals(expectedTotalPosts + " total blog posts so far."));
+</code></pre>
+
+<p>Running the tests should now show that all the tests are passing, sweet.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
